@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card,Text } from 'react-native-paper'
-import { IMAGES } from '../utils/app_constants'
+import { COLORS, IMAGES } from '../utils/app_constants'
 
 const CollectionList = ({data, handleGoToBookPreviewScreen}) => {
 
@@ -13,9 +13,14 @@ const CollectionList = ({data, handleGoToBookPreviewScreen}) => {
         <Card.Title 
             title={data?.title ?? 'No title...'}
             titleStyle={{
-              fontSize: 14
+              fontSize: 14,
+              fontWeight: '800',
+              color: COLORS.MAIN_TEXT
             }}
             subtitle={data?.description ?? 'No description...'}
+            subtitleStyle={{
+              color: COLORS.GRAY
+            }}
         />
     </Card>
   )
