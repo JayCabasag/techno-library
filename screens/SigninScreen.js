@@ -115,7 +115,8 @@ export default function SigninScreen({navigation}) {
             fullname: user[0]?.fullname,
             email: user[0]?.email,
             password:  user[0]?.password,
-            createdAt: user[0]?.createdAt
+            createdAt: user[0]?.createdAt,
+            photoUrl: user[0]?.photoUrl ?? IMAGES.DEFAULT_PHOTO_URL
           }
           setUser(userData)
           const convertedToStringObject = JSON.stringify(userData)

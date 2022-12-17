@@ -13,7 +13,8 @@ export const COLORS = {
 export const IMAGES = {
     LOGO: '../assets/tcu_mobile_library.png',
     NO_IMAGE_AVAILABLE: '../assets/no-image.png',
-    LOGIN_BANNER_IMAGE: 'https://firebasestorage.googleapis.com/v0/b/tcumobilelibrary.appspot.com/o/logo%2Floginbanner.jpeg?alt=media&token=7fe07341-0ed4-4964-954c-c0fd257e58ed'
+    LOGIN_BANNER_IMAGE: 'https://firebasestorage.googleapis.com/v0/b/tcumobilelibrary.appspot.com/o/logo%2Floginbanner.jpeg?alt=media&token=7fe07341-0ed4-4964-954c-c0fd257e58ed',
+    DEFAULT_PHOTO_URL: 'https://firebasestorage.googleapis.com/v0/b/tcumobilelibrary.appspot.com/o/avatars%2F194938.png?alt=media&token=23ee2dd9-19ce-494c-8c0f-be87950725fa'
 }
 
 export const TOTAL_BOOK_LOAD_LIMIT = 10
