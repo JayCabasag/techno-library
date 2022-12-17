@@ -21,6 +21,7 @@ export default function ForgotPasswordScreen({navigation}) {
   const [showRecoveryPasswordField, setShowRecoveryPasswordField] = useState(false)
   const [recoveryPassword, setRecoveryPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
+  const [isAuthenticating, setIsAuthenticating] = useState(false)
 
   const goToSignIn = () => {
     navigation.navigate('Signin')
@@ -31,7 +32,9 @@ export default function ForgotPasswordScreen({navigation}) {
     return emailRegex.test(value);
   }
   const handleOnSendToMyEmail = () => {
+    setIsAuthenticating(true)
     if(email === ''){
+      setIsAuthenticating(false)
       return showMessage({
         message: `Please add an email address`,
         icon: props => <Entypo name="circle-with-cross" size={22} color={COLORS.WHITE} {...props}/>,
@@ -40,6 +43,7 @@ export default function ForgotPasswordScreen({navigation}) {
     }
 
     if(!isEmail(email)){
+      setIsAuthenticating(false)
       return showMessage({
         message: `Email you provided is Invalid`,
         icon: props => <Entypo name="circle-with-cross" size={22} color={COLORS.WHITE} {...props}/>,
@@ -58,6 +62,7 @@ export default function ForgotPasswordScreen({navigation}) {
       }).then((response) => {
         if(response?.data?.success){
           setShowRecoveryPasswordField(true)
+          setIsAuthenticating(false)
           return showMessage({
             message: response.data?.message ?? 'Please check your email',
             type: 'success'
@@ -65,6 +70,7 @@ export default function ForgotPasswordScreen({navigation}) {
         }
         if(!response?.data?.success){
           setShowRecoveryPasswordField(false)
+          setIsAuthenticating(false)
           return showMessage({
             message: response.data?.message ?? 'Ann error occured. Please try again later',
             icon: props => <Entypo name="circle-with-cross" size={22} color={COLORS.WHITE} {...props}/>,
@@ -74,6 +80,7 @@ export default function ForgotPasswordScreen({navigation}) {
       })
     } catch (error) {
       setShowRecoveryPasswordField(false)
+      setIsAuthenticating(false)
       return showMessage({
         message: `An error occured. Please try again later.`,
         icon: props => <Entypo name="circle-with-cross" size={22} color={COLORS.WHITE} {...props}/>,
@@ -224,6 +231,7 @@ export default function ForgotPasswordScreen({navigation}) {
                     buttonColor={COLORS.RED}
                     contentStyle={{paddingVertical: 10}}
                     onPress={handleOnSendToMyEmail}
+                    disabled={isAuthenticating}
                   >
                     Send to my Email
                   </Button>)

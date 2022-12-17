@@ -46,8 +46,8 @@ const PdfReaderScreen = ({ navigation, route: {params :{ file }} }) => {
           width: '100%',
         }}
       >
-        <Appbar.BackAction onPress={() => navigation.goBack()} size={23} />
-        <Appbar.Content title={'Pdf viewer'} color={COLORS.WHITE} />
+        <Appbar.BackAction onPress={() => navigation.goBack()} size={23} color={COLORS.WHITE} />
+        <Appbar.Content title={'Pdf viewer'} color={COLORS.WHITE} titleStyle={{fontWeight: "bold"}}/>
       </Appbar.Header>
       {isLoadingPdf && (
         <View

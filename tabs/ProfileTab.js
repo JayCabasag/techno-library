@@ -1,5 +1,5 @@
 import React, { useContext, useState} from 'react'
-import { View, Text, StyleSheet, StatusBar, ScrollView} from 'react-native'
+import { View, Text, StyleSheet, StatusBar, ScrollView, Dimensions} from 'react-native'
 import { Appbar, Avatar, Button, Chip, List } from 'react-native-paper'
 import { COLORS } from '../utils/app_constants'
 import ProfileBottomSheet from './ProfileBottomSheet'
@@ -9,6 +9,9 @@ import moment from 'moment'
 import { UserContext } from '../context/UserContext'
 import { collection, getDocs, limit, query, where} from 'firebase/firestore/lite';
 import { db } from '../firebase/firebaseConfig'
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const ProfileTab = ({navigation}) => {
 
@@ -69,43 +72,52 @@ const ProfileTab = ({navigation}) => {
           <Feather name="settings" size={20} color={COLORS.WHITE}/>
         </Button>
       </Appbar.Header>
-      <View style={{justifyContent: 'center', alignItems: 'center', backgroundColor: COLORS.RED, height: 300, borderBottomEndRadius: 20, borderBottomLeftRadius: 20, flex: 1}}>
-        <Avatar.Image size={150} source={{uri: 'https://picsum.photos/700'}} />
-        <View style={{ paddingTop: 22,display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 'auto'}}>
-          <Text style={{color: COLORS.WHITE, fontSize: 25, marginRight: 10, textTransform: 'capitalize'}}>{user?.fullname ?? 'Not set'}</Text>
-          <MaterialIcons name='check-circle' size={21} color={COLORS.WHITE}/>
+      <View style={{justifyContent: 'center', alignItems: 'center', backgroundColor: COLORS.RED, height: 150, borderBottomEndRadius: 20, borderBottomLeftRadius: 20, flex: 1, paddingBottom: 20}}>
+        <View
+          style={{
+            display: 'flex', 
+            flexDirection: 'row',
+            width: windowWidth,
+            marginLeft: 40
+          }}
+        >
+          <Avatar.Image size={120} source={{uri: 'https://picsum.photos/700'}} />
+          <View style={{marginLeft: 10, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 'auto'}}>
+            <View>
+              <Text style={{color: COLORS.WHITE, fontSize: 20, marginRight: 10, textTransform: 'capitalize'}}>{user?.fullname ?? 'Not set'}</Text>
+              <Button mode='contained' buttonColor={COLORS.WHITE} style={{marginTop: 10}} labelStyle={{fontSize: 12, color: COLORS.RED, padding: 0}}>Change avatar</Button>
+            </View>
+          </View>
         </View>
       </View>
       <List.Item
         title="Username"
         description={user?.username ?? 'Not set'}
         left={props => <List.Icon {...props} icon='account' />}
-        style={{paddingVertical: 15}}
+        style={{paddingVertical: 10}}
       />
       <List.Item
         title="Email"
         description={user?.email ?? 'Not set'}
         left={props => <List.Icon {...props} icon="email" />}
-        style={{paddingVertical: 15}}
+        style={{paddingVertical: 10}}
       />
       <List.Item
         title="Date joined"
         description={moment(formattedDateFromFirestore).format('MMM DD, YYYY') ?? ''}
         left={props => <List.Icon {...props} icon="set-all" />}
-        style={{paddingVertical: 15}}
+        style={{paddingVertical: 10}}
       />
       <List.Item
         title="Books added to Favorites"
         description={(favoriteBookList?.length).toString()}
         left={props => <List.Icon {...props} icon="heart" />}
-        style={{paddingVertical: 15}}
+        style={{paddingVertical: 10}}
       />
-       <View style={{paddingHorizontal: 22, marginVertical: 30}}>
+
+       <View style={{alignSelf: 'flex-start', marginLeft: 15}}>
         <Button 
           buttonColor={COLORS.RED}
-          contentStyle={{
-            paddingVertical: 10
-          }}
           icon="logout" 
           mode="contained" 
           onPress={handleSignOut}>
@@ -121,7 +133,8 @@ export default ProfileTab
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: COLORS.WHITE
+    backgroundColor: COLORS.WHITE,
+    minHeight: windowHeight
   },
   newCollectionText: {
     color: COLORS.WHITE,

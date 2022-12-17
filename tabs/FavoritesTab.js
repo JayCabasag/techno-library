@@ -104,7 +104,7 @@ export default function FavoritesTab({ navigation }) {
           backgroundColor: COLORS.RED
         }}
         >
-        <Appbar.Content title="Favorites" color={COLORS.WHITE} />
+        <Appbar.Content title="Favorites" color={COLORS.WHITE} titleStyle={{fontWeight: "bold"}}/>
       </Appbar.Header>
       <View style={{width: '100%', height: 'auto', minHeight: '100%', backgroundColor: 'transparent', height: 'auto', paddingHorizontal: 5}}>
       <View
@@ -129,8 +129,9 @@ export default function FavoritesTab({ navigation }) {
         const dateAddedToFavorites = data.createdAt.toDate()
         return  <List.Item
         title={data?.title ?? 'No title'}
-        titleStyle={{fontWeight: '800'}}
-        description={moment(dateAddedToFavorites).format('MMM DD, YYYY')}
+        titleStyle={{fontWeight: '800', fontSize: 14}}
+        description={`Added ${moment(dateAddedToFavorites).format('MMM DD, YYYY')}`}
+        descriptionStyle={{fontSize: 10}}
         onPress={() => handleOpenPreviewBook(data)}
         key={index}
         left={props => {

@@ -27,6 +27,8 @@ export default function SignupScreen({navigation}) {
   const [showPassword, setShowPassword] = React.useState(true)
   const [showRetypedPassword, setShowRetypedPassword] = React.useState(true)
 
+  const [isAuthenticating, setIsAuthenticating] = React.useState(false)
+
   const goToRegister = () => {
     navigation.navigate('Signin')
   }
@@ -53,6 +55,7 @@ export default function SignupScreen({navigation}) {
     });
     const emailAlreadyInUse = userWithSameEmail?.length > 0
     if(emailAlreadyInUse){
+      setIsAuthenticating(false)
       return showMessage({
         message: `${user?.email} is already in used by other user.`,
         icon: props => <Entypo name="circle-with-cross" size={22} color={COLORS.WHITE} {...props}/>,
@@ -69,6 +72,7 @@ export default function SignupScreen({navigation}) {
 
     const idAlreadyInUse = userWithSameId?.length > 0
     if(idAlreadyInUse){
+      setIsAuthenticating(false)
       return showMessage({
         message: `${user?.name} is already used by other user.`,
         icon: props => <Entypo name="circle-with-cross" size={22} color={COLORS.WHITE} {...props}/>,
@@ -83,8 +87,10 @@ export default function SignupScreen({navigation}) {
       const docId = response.id
       const convertedToStringUserDataObject = JSON.stringify(user)
       storeUserData(convertedToStringUserDataObject)
+      setIsAuthenticating(false)
       navigation.navigate('Signin')
     }).catch(() => {
+      setIsAuthenticating(false)
       return showMessage({
         message: `Error registering user. Please try again`,
         icon: props => <Entypo name="circle-with-cross" size={22} color={COLORS.WHITE} {...props}/>,
@@ -104,7 +110,7 @@ export default function SignupScreen({navigation}) {
   }
 
   const handleRegisterUser = () => {
-
+    setIsAuthenticating(true)
     const validateEmail = (text) => {
       let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
       if (reg.test(text) === false) {
@@ -116,6 +122,7 @@ export default function SignupScreen({navigation}) {
     }
 
     if(username.length <= 0){
+      setIsAuthenticating(false)
       return showMessage({
         message: `Please add your username`,
         icon: props => <Entypo name="circle-with-cross" size={22} color={COLORS.WHITE} {...props}/>,
@@ -124,6 +131,7 @@ export default function SignupScreen({navigation}) {
     }
 
     if(fullname.length <= 0){
+      setIsAuthenticating(false)
       return showMessage({
         message: `Please add your fullname`,
         icon: props => <Entypo name="circle-with-cross" size={22} color={COLORS.WHITE} {...props}/>,
@@ -132,6 +140,7 @@ export default function SignupScreen({navigation}) {
     }
 
     if(email.length <= 0){
+      setIsAuthenticating(false)
       return showMessage({
         message: `Please add your email`,
         icon: props => <Entypo name="circle-with-cross" size={22} color={COLORS.WHITE} {...props}/>,
@@ -139,6 +148,7 @@ export default function SignupScreen({navigation}) {
       });
     }
     if(validateEmail(email)){
+      setIsAuthenticating(false)
       return showMessage({
         message: `Email format is incorrect`,
         icon: props => <Entypo name="circle-with-cross" size={22} color={COLORS.WHITE} {...props}/>,
@@ -148,6 +158,7 @@ export default function SignupScreen({navigation}) {
     
 
     if(password.length <= 0){
+      setIsAuthenticating(false)
       return showMessage({
         message: `Please add your password`,
         icon: props => <Entypo name="circle-with-cross" size={22} color={COLORS.WHITE} {...props}/>,
@@ -156,6 +167,7 @@ export default function SignupScreen({navigation}) {
     }
 
     if(password.length <= 6){
+      setIsAuthenticating(false)
       return showMessage({
         message: `Please should contain atleast 7 letters`,
         icon: props => <Entypo name="circle-with-cross" size={22} color={COLORS.WHITE} {...props}/>,
@@ -164,6 +176,7 @@ export default function SignupScreen({navigation}) {
     }
 
     if(retypedPassword.length <= 6){
+      setIsAuthenticating(false)
       return showMessage({
         message: `Please retype your password`,
         icon: props => <Entypo name="circle-with-cross" size={22} color={COLORS.WHITE} {...props}/>,
@@ -172,6 +185,7 @@ export default function SignupScreen({navigation}) {
     }
 
     if(password !== retypedPassword){
+      setIsAuthenticating(false)
       return showMessage({
         message: `Please make sure password and retypes password is same.`,
         icon: props => <Entypo name="circle-with-cross" size={22} color={COLORS.WHITE} {...props}/>,
@@ -180,6 +194,7 @@ export default function SignupScreen({navigation}) {
     }
 
     if(!agreedToTermsAndConditionsPolicies){
+      setIsAuthenticating(false)
       return showMessage({
         message: `Please agree our terms and conditons policies.`,
         icon: props => <Entypo name="circle-with-cross" size={22} color={COLORS.WHITE} {...props}/>,
@@ -265,7 +280,7 @@ export default function SignupScreen({navigation}) {
                   underlineColor={COLORS.RED}
                   placeholderTextColor={COLORS.RED}
                   activeOutlineColor={COLORS.RED}
-                  right={<TextInput.Icon icon={showPassword ?'eye-off' : 'eye' } onPress={() => setShowPassword(prevState => !prevState)}/>}
+                  right={<TextInput.Icon style={{height: 60, marginTop: 15}} icon={showPassword ?'eye-off' : 'eye' } onPress={() => setShowPassword(prevState => !prevState)}/>}
                 />
                  <TextInput
                   mode='outlined'
@@ -279,7 +294,7 @@ export default function SignupScreen({navigation}) {
                   underlineColor={COLORS.RED}
                   placeholderTextColor={COLORS.RED}
                   activeOutlineColor={COLORS.RED}
-                  right={<TextInput.Icon icon={showRetypedPassword ?'eye-off' : 'eye' } onPress={() => setShowRetypedPassword(prevState => !prevState)}/>}
+                  right={<TextInput.Icon style={{height: 60, marginTop: 15}} icon={showRetypedPassword ?'eye-off' : 'eye' } onPress={() => setShowRetypedPassword(prevState => !prevState)}/>}
                 />
                  <View 
                   style={{display: 'flex', flexDirection: 'row', width: 320, marginTop: 10, alignItems: 'center'}}
@@ -304,6 +319,7 @@ export default function SignupScreen({navigation}) {
                   buttonColor={COLORS.RED}
                   onPress={handleRegisterUser}
                   contentStyle={{paddingVertical: 10}}
+                  disabled={isAuthenticating}
                 >
                   Sign up
                 </Button>
@@ -347,7 +363,7 @@ const styles = StyleSheet.create({
   inputField: {
    marginTop: 10,
    width: 320,
-   lineHeight: 60,
+   height: 60,
    backgroundColor: COLORS.WHITE
   },
   signInButton: {

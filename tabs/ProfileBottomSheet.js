@@ -30,10 +30,6 @@ const ProfileBottomSheet = ({navigation, showModal, handleToggleModal}) => {
               <ScrollView style={{width: '100%', paddingHorizontal: 22}} showsVerticalScrollIndicator={false}>
                 <View style={{ flex: 1, flexDirection: 'column', height: 'auto', display: 'flex'}}>
                 <Text style={{fontWeight: 'bold', fontSize: 20}}>Edit Profile</Text>
-                  
-                 <Avatar.Image size={150} source={{uri: profile}} style={{alignSelf: 'center', marginVertical: 10}}/>
-                 <Button mode='contained' color={COLORS.RED} icon={'upload'}>Upload Photo</Button>
-                 
                  <TextInput
                   mode='outlined'
                   label={'Fullname'}
@@ -102,5 +98,11 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
+    inputField: {
+      marginTop: 10,
+      width: 320,
+      hegiht: 60,
+      backgroundColor: COLORS.WHITE
+     },
   });
   

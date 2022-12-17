@@ -85,7 +85,7 @@ const ExploreTab = ({navigation}) => {
           backgroundColor: COLORS.RED
         }}
         >
-        <Appbar.Content title="Explore" color={COLORS.WHITE} />
+        <Appbar.Content title="Explore" color={COLORS.WHITE} titleStyle={{fontWeight: "bold"}}/>
       </Appbar.Header>
       <View style={{paddingHorizontal: 22, paddingTop: 15}}>
         <Searchbar

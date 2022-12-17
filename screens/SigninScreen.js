@@ -24,6 +24,8 @@ export default function SigninScreen({navigation}) {
   const [password, setPassword] = React.useState('')
   const [showPassword, setShowPassword] = React.useState(true)
 
+  const [isAuthenticating, setIsAuthenticating] =  React.useState(false)
+
   const goToRegister = () => {
     navigation.navigate('Signup')
   }
@@ -98,6 +100,7 @@ export default function SigninScreen({navigation}) {
         }
 
         if(user?.length <= 0){
+          setIsAuthenticating(false)
           return showMessage({
             message: `Username or password is incorrect`,
             icon: props => <Entypo name="circle-with-cross" size={22} color={COLORS.WHITE} {...props}/>,
@@ -116,12 +119,13 @@ export default function SigninScreen({navigation}) {
           }
           setUser(userData)
           const convertedToStringObject = JSON.stringify(userData)
+          setIsAuthenticating(false)
           return storeUserData(convertedToStringObject)
         }
-
+        setIsAuthenticating(false)
         return 
       }
-
+      setIsAuthenticating(false)
       return showMessage({
         message: `Username or password is incorrect`,
         icon: props => <Entypo name="circle-with-cross" size={22} color={COLORS.WHITE} {...props}/>,
@@ -130,7 +134,9 @@ export default function SigninScreen({navigation}) {
   }
   
   const handleSignInUser = () => {
+    setIsAuthenticating(true)
     if(email?.length <= 0){
+      setIsAuthenticating(false)
       return showMessage({
         message: `Add your username or email`,
         icon: props => <Entypo name="circle-with-cross" size={22} color={COLORS.WHITE} {...props}/>,
@@ -138,6 +144,7 @@ export default function SigninScreen({navigation}) {
       });
     }
     if(password?.length <= 0){
+      setIsAuthenticating(false)
       return showMessage({
         message: `Please add your password`,
         icon: props => <Entypo name="circle-with-cross" size={22} color={COLORS.WHITE} {...props}/>,
@@ -145,6 +152,7 @@ export default function SigninScreen({navigation}) {
       });
     }
     if(password?.length <= 6){
+      setIsAuthenticating(false)
       return showMessage({
         message: `Password should contain atleast 8 letters`,
         icon: props => <Entypo name="circle-with-cross" size={22} color={COLORS.WHITE} {...props}/>,
@@ -193,7 +201,7 @@ export default function SigninScreen({navigation}) {
                   underlineColor={COLORS.RED}
                   placeholderTextColor={COLORS.RED}
                   activeOutlineColor={COLORS.RED}
-                  right={<TextInput.Icon icon={showPassword ?'eye-off' : 'eye' } onPress={() => setShowPassword(prevState => !prevState)}/>}
+                  right={<TextInput.Icon style={{height: 60, marginTop: 15}} icon={showPassword ?'eye-off' : 'eye' } onPress={() => setShowPassword(prevState => !prevState)}/>}
                 />
                  <View style={{display: 'flex', marginTop: 10, width: 320}}>
                   <TouchableOpacity
@@ -208,6 +216,7 @@ export default function SigninScreen({navigation}) {
                   buttonColor={COLORS.RED}
                   onPress={handleSignInUser}
                   contentStyle={{paddingVertical: 10}}
+                  disabled={isAuthenticating}
                 >
                   Sign in
                 </Button>
@@ -266,10 +275,8 @@ const styles = StyleSheet.create({
   inputField: {
    marginTop: 10,
    width: 320,
-   lineHeight: 60,
-   backgroundColor: COLORS.WHITE,
-   display: 'flex',
-   justifyContent: 'center'
+   height: 60,
+   backgroundColor: COLORS.WHITE
   },
   signInButton: {
     marginTop: 10, 
