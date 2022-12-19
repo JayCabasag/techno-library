@@ -219,9 +219,10 @@ export default function ForgotPasswordScreen({navigation}) {
                   showRecoveryPasswordField ? (<Button
                     mode="contained"
                     style={styles.signInButton}
-                    color={COLORS.RED}
+                    buttonColor={COLORS.RED}
                     contentStyle={{paddingVertical: 10}}
                     onPress={handleResetPassword}
+                    disabled={isAuthenticating}
                   >
                     Reset password
                   </Button>) : 

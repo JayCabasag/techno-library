@@ -215,6 +215,33 @@ const ProfileBottomSheet = ({navigation, showModal, handleToggleModal}) => {
             return
           }
         }
+
+        if(!isSameFullname){
+          const userRef = doc(db, "users", userId)
+          
+          try {
+            await updateDoc(userRef, {
+                fullname: fullname
+              }).then(() => {
+                setSuccessMessage("Information updated successfully. Please re login to get the most updated information")
+                setSuccess(true)
+                setIsAuthenticating(false)
+                return
+              })
+            } catch (error) {
+              console.log(error)
+              setErrorMessage('Error updating your information.')
+              setError(true)
+              setIsAuthenticating(false)
+              return
+          } 
+
+          setIsAuthenticating(false)
+          return
+        }
+
+
+
         const currentUserRef = doc(db, "users", userId)
 
         try {
@@ -339,7 +366,7 @@ const ProfileBottomSheet = ({navigation, showModal, handleToggleModal}) => {
                 {
                   success && <View style={{display: 'flex', flexDirection: 'row', paddingVertical: 15, paddingHorizontal: 5, color: 'rgb(30, 70, 32)', backgroundColor: 'rgb(237, 247, 237)', borderRadius: 10, marginTop: 10}}>
                   <Entypo name='check' size={20} color={'rgb(30, 70, 32)'} style={{marginHorizontal: 10}}/>
-                  <Text style={{width: 280}}>{successMessage}</Text>
+                  <Text style={{width: 250}}>{successMessage}</Text>
                 </View>
                 }
 
@@ -420,7 +447,7 @@ const ProfileBottomSheet = ({navigation, showModal, handleToggleModal}) => {
                   placeholderTextColor={COLORS.RED}
                   activeOutlineColor={COLORS.RED}
                   secureTextEntry={showOldPassword}
-                  right={<TextInput.Icon style={{height: 60, marginTop: 15}} icon={showOldPassword ?'eye-off' : 'eye' } onPress={() => setShowOldPassword(prevState => !prevState)}/>}
+                  right={<TextInput.Icon style={{height: 60, marginTop: 10}} icon={showOldPassword ?'eye-off' : 'eye' } onPress={() => setShowOldPassword(prevState => !prevState)}/>}
                 />
                 <View style={{marginVertical: 30}}>
                     <Button 

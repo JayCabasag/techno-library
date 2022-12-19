@@ -175,11 +175,11 @@ const ProfileTab = ({navigation}) => {
               <Avatar.Image size={120} source={{uri: profilePhoto}} />
               <View style={{marginLeft: 10, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 'auto'}}>
                 <View>
-                  <Text style={{color: COLORS.WHITE, fontSize: 20, marginRight: 10, textTransform: 'capitalize'}}>{user?.fullname ?? 'Not set'}</Text>
+                  <Text style={{color: COLORS.WHITE, fontSize: 20, marginRight: 10, textTransform: 'capitalize', maxWidth: 200}}>{user?.fullname ?? 'Not set'}</Text>
                   <Button
                   mode='contained' 
                   buttonColor={COLORS.WHITE} 
-                  style={{marginTop: 10}} 
+                  style={{marginTop: 10, minWidth: 130, width: 150}} 
                   labelStyle={{fontSize: 12, color: COLORS.RED, padding: 0}}
                   onPress={showChangeAvatarModal}
                   >
@@ -193,28 +193,33 @@ const ProfileTab = ({navigation}) => {
             title="Username"
             description={user?.username ?? 'Not set'}
             left={props => <List.Icon {...props} icon='account' />}
-            style={{paddingVertical: 10}}
+          />
+          <List.Item
+            title="Fullname"
+            description={user?.fullname ?? 'Not set'}
+            left={props => <List.Icon {...props} icon='account' />}
           />
           <List.Item
             title="Email"
             description={user?.email ?? 'Not set'}
             left={props => <List.Icon {...props} icon="email" />}
-            style={{paddingVertical: 10}}
           />
           <List.Item
             title="Date joined"
             description={moment(formattedDateFromFirestore).format('MMM DD, YYYY') ?? ''}
             left={props => <List.Icon {...props} icon="set-all" />}
-            style={{paddingVertical: 10}}
           />
+          <TouchableOpacity
+            onPress={() => navigation.navigate("FavoritesTab")}
+          >
           <List.Item
             title="Books added to Favorites"
             description={(favoriteBookList?.length).toString()}
             left={props => <List.Icon {...props} icon="heart" />}
-            style={{paddingVertical: 10}}
           />
+          </TouchableOpacity>
 
-          <View style={{alignSelf: 'flex-start', marginLeft: 15}}>
+          <View style={{alignSelf: 'flex-start', marginLeft: 15, marginBottom: 15}}>
             <Button 
               buttonColor={COLORS.RED}
               icon="logout" 
@@ -233,8 +238,7 @@ export default ProfileTab
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: COLORS.WHITE,
-    minHeight: windowHeight
+    backgroundColor: COLORS.WHITE
   },
   newCollectionText: {
     color: COLORS.WHITE,
