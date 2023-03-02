@@ -28,7 +28,7 @@ export default function SignupScreen({navigation}) {
   const [showRetypedPassword, setShowRetypedPassword] = React.useState(true)
 
   const [isAuthenticating, setIsAuthenticating] = React.useState(false)
-
+  
   const goToRegister = () => {
     navigation.navigate('Signin')
   }
@@ -43,6 +43,11 @@ export default function SignupScreen({navigation}) {
     } catch (e) {
       // saving error
     }
+  }
+
+  const handleUpdateUsername = (text) => {
+    const lowerCaseString = text.toLocaleLowerCase()
+    setUsername(lowerCaseString)
   }
 
   const registerUserToDatabase = async (user) => {
@@ -235,8 +240,8 @@ export default function SignupScreen({navigation}) {
                 <TextInput
                   mode='outlined'
                   label={'Username'}
-                  value={username}
-                  onChangeText={text => setUsername(text.toLocaleLowerCase())}
+                  defaultValue={username}
+                  onChangeText={text => handleUpdateUsername(text)}
                   style={styles.inputField}
                   selectionColor={COLORS.RED}
                   outlineColor={COLORS.RED}
@@ -247,7 +252,7 @@ export default function SignupScreen({navigation}) {
                 <TextInput
                   mode='outlined'
                   label={'Fullname'}
-                  value={fullname}
+                  defaultValue={fullname}
                   onChangeText={text => setFullname(text)}
                   style={styles.inputField}
                   selectionColor={COLORS.RED}
@@ -259,7 +264,7 @@ export default function SignupScreen({navigation}) {
                  <TextInput
                   mode='outlined'
                   label={'Email'}
-                  value={email}
+                  defaultValue={email}
                   onChangeText={text => setEmail(text)}
                   style={styles.inputField}
                   selectionColor={COLORS.RED}
@@ -271,7 +276,7 @@ export default function SignupScreen({navigation}) {
                 <TextInput
                   mode='outlined'
                   label="Password"
-                  value={password}
+                  defaultValue={password}
                   onChangeText={text => setPassword(text)}
                   style={styles.inputField}
                   secureTextEntry={showPassword}
@@ -285,7 +290,7 @@ export default function SignupScreen({navigation}) {
                  <TextInput
                   mode='outlined'
                   label="Re-type password"
-                  value={retypedPassword}
+                  defaultValue={retypedPassword}
                   onChangeText={text => setRetypedPassword(text)}
                   style={styles.inputField}
                   secureTextEntry={showRetypedPassword}

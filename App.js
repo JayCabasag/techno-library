@@ -13,6 +13,7 @@ import { StatusBar } from 'expo-status-bar';
 import BookPreviewScreen from './screens/BookPreviewScreen';
 import { StateProvider } from './context/UserContext';
 
+
 export default function App() {
 
   return (
